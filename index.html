@@ -1,132 +1,180 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>游戏拆解分析作品集 - Inkfluscp</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏拆解分析作品集 | inkfluscp</title>
   <style>
     body {
-      font-family: "Microsoft YaHei", Arial, sans-serif;
-      background-color: #0e0e0e;
+      font-family: "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2c2c3f);
       color: #f5f5f5;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
-      background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
       text-align: center;
-      padding: 60px 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      padding: 80px 20px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     header h1 {
-      font-size: 2.5em;
-      color: #00ffc3;
-      text-shadow: 0 0 8px #00ffc3;
+      font-size: 2.6em;
       margin-bottom: 10px;
+      color: #00ffff;
+      letter-spacing: 2px;
     }
 
     header p {
-      font-size: 1.2em;
-      color: #cccccc;
+      font-size: 1.1em;
+      color: #ccc;
     }
 
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 50px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    section {
-      background: #1b1b1b;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0, 255, 195, 0.2);
-      margin-bottom: 40px;
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
       padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
     }
 
-    h2 {
-      color: #00ffc3;
-      text-shadow: 0 0 6px #00ffc3;
-      font-size: 1.5em;
-      margin-top: 0;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
     }
 
-    p {
-      color: #cccccc;
-      margin-bottom: 15px;
+    .card h3 {
+      color: #00ffff;
+      font-size: 1.2em;
+      margin-bottom: 10px;
     }
 
-    embed {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 8px;
-      background: #000;
+    .card a {
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(90deg, #00b3ff, #00ffff);
+      padding: 10px 16px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .card a:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
     }
 
     footer {
       text-align: center;
-      color: #777;
-      padding: 20px;
-      font-size: 0.9em;
-      border-top: 1px solid #333;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #bbb;
+      line-height: 1.8em;
     }
 
-    @media (max-width: 600px) {
-      embed {
-        height: 400px;
+    footer p {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 0.95em;
+    }
+
+    footer .contact {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #00ffff;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
       }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeInUp 0.6s ease forwards;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>🎮 游戏拆解分析作品集</h1>
-    <p>Inkfluscp - Game Designer Portfolio</p>
+    <p>by inkfluscp · 游戏策划 / 系统分析 / 创意表达</p>
   </header>
 
-  <main>
-    <section>
-      <h2>指尖无双游戏拆解</h2>
-      <p>分析核心战斗节奏、数值与操作反馈设计。</p>
-      <embed src="指尖无双游戏拆解.pdf" type="application/pdf" />
-    </section>
+  <section class="grid">
+    <div class="card">
+      <h3>指尖无双 · 游戏拆解</h3>
+      <a href="指尖无双游戏拆解.pdf" target="_blank">查看 PDF</a>
+    </div>
 
-    <section>
-      <h2>末日曙光：幸存者策划</h2>
-      <p>生存类策略游戏系统与留存机制策划文档。</p>
-      <embed src="末日曙光：幸存者策划.pdf" type="application/pdf" />
-    </section>
+    <div class="card">
+      <h3>末日曙光：幸存者策划</h3>
+      <a href="末日曙光：幸存者策划.pdf" target="_blank">查看 PDF</a>
+    </div>
 
-    <section>
-      <h2>火影忍者游戏拆解</h2>
-      <p>横版动作战斗系统与技能循环分析。</p>
-      <embed src="火影忍者游戏拆解.pdf" type="application/pdf" />
-    </section>
+    <div class="card">
+      <h3>火影忍者 · 游戏拆解</h3>
+      <a href="火影忍者游戏拆解.pdf" target="_blank">查看 PDF</a>
+    </div>
 
-    <section>
-      <h2>火影忍者游戏设计逆推案</h2>
-      <p>从关卡与技能表现逆向推演设计逻辑。</p>
-      <embed src="火影忍者游戏设计逆推案.pdf" type="application/pdf" />
-    </section>
+    <div class="card">
+      <h3>火影忍者 · 游戏设计逆推案</h3>
+      <a href="火影忍者游戏设计逆推案.pdf" target="_blank">查看 PDF</a>
+    </div>
 
-    <section>
-      <h2>火柴人至高对决游戏拆解</h2>
-      <p>格斗节奏与角色数值平衡研究报告。</p>
-      <embed src="火柴人至高对决游戏拆解.pdf" type="application/pdf" />
-    </section>
+    <div class="card">
+      <h3>火柴人至高对决 · 游戏拆解</h3>
+      <a href="火柴人至高对决游戏拆解.pdf" target="_blank">查看 PDF</a>
+    </div>
 
-    <section>
-      <h2>羽风奇缘策划</h2>
-      <p>奇幻冒险题材核心循环与关卡体验文档。</p>
-      <embed src="羽风奇缘策划.pdf" type="application/pdf" />
-    </section>
-  </main>
+    <div class="card">
+      <h3>羽风奇缘 · 策划案</h3>
+      <a href="羽风奇缘策划.pdf" target="_blank">查看 PDF</a>
+    </div>
+  </section>
 
   <footer>
-    © 2025 Inkfluscp | 游戏拆解分析作品集 | inkfluscp.github.io
+    <p>
+      一个真正热爱游戏的玩家，其热情远不止沉溺于虚拟世界的排名与胜负之间。<br>
+      他会将自己钟爱的游戏视若珍宝，愿意从剧情、机制、美术、音乐乃至文化背景等各个维度去深入探索，<br>
+      如同热恋中的人渴望了解伴侣的一切那般，充满好奇与专注。<br><br>
+
+      玩游戏，于真正的游戏爱好者而言，是一场与作品的深度对话。<br>
+      他们不仅倾听其中所传递的情感与思想，也品味玩法设计的精妙，欣赏系统架构的智慧，<br>
+      同时也清醒地意识到其中可能存在的局限与遗憾。<br>
+      游戏，在这些玩家心中，是一种特别的数字艺术品。<br><br>
+
+      玩家与游戏设计师之间，更像是侠客与铁匠的关系。<br>
+      一位善用兵器的侠客，在握剑的刹那，便能感受到铁匠千锤百炼的用心，<br>
+      每一道锻痕中所凝结的匠心与执着。<br>
+      而铁匠亦深知，唯有历经生死相搏、江湖洗礼的侠客，才能真正领悟这把武器的灵魂所在，<br>
+      并将其威力发挥到极致。<br><br>
+
+      在这种默契之中，游戏不再只是娱乐的工具，<br>
+      而成为连接创造者与体验者的精神桥梁——一种唯有真正懂得的人，才能读得懂的语言。
+    </p>
+    <div class="contact">📧 联系邮箱：2898124867@qq.com</div>
   </footer>
 </body>
 </html>
