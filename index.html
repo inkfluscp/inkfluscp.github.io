@@ -5,153 +5,249 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>游戏拆解分析作品集 | inkfluscp</title>
   <style>
+    * { box-sizing: border-box; }
     body {
-      font-family: "Microsoft YaHei", sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2c2c3f);
-      color: #f5f5f5;
       margin: 0;
-      padding: 0;
+      font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1b1b2f, #101018 80%);
+      color: #f0f0f0;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
+    /* === 背景粒子 === */
+    canvas#bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    /* === 封面动画层 === */
+    #intro {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at center, #0a0a14, #000);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 4.5s;
+    }
+
+    #intro.hidden { display: none; }
+
+    #intro h1 {
+      color: #00ffff;
+      font-size: 3em;
+      opacity: 0;
+      animation: logoFade 3s ease forwards;
+    }
+
+    #intro p {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #ccc;
+      opacity: 0;
+      animation: fadeIn 1s ease 3s forwards, glow 2s infinite alternate;
+    }
+
+    #intro::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: -50%;
+      width: 200%; height: 2px;
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
+      opacity: 0;
+      animation: lightSweep 3s ease-in-out 1s forwards;
+    }
+
+    @keyframes logoFade {
+      0% { opacity: 0; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes lightSweep {
+      0% { opacity: 0; transform: translateX(-50%) scaleX(0.2); }
+      50% { opacity: 1; transform: translateX(50%) scaleX(1.2); }
+      100% { opacity: 0; transform: translateX(150%) scaleX(0.3); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #00ffff; }
+      to { text-shadow: 0 0 20px #00ffff; }
+    }
+
+    /* === 主内容 === */
     header {
       text-align: center;
-      padding: 80px 20px 40px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 120px 20px 80px;
+      position: relative;
     }
 
     header h1 {
-      font-size: 2.6em;
-      margin-bottom: 10px;
+      font-size: 2.8em;
       color: #00ffff;
       letter-spacing: 2px;
+      opacity: 0;
+      animation: typing 3s steps(20, end) 5.5s forwards, blink 0.75s step-end infinite 8.5s;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: .15em solid #00ffff;
+      width: 0;
+      display: inline-block;
     }
 
     header p {
       font-size: 1.1em;
       color: #ccc;
+      opacity: 0;
+      animation: fadeIn 1.5s ease 6.5s forwards;
     }
 
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #00ffff; }
+    }
+
+    /* === 网格布局 === */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      padding: 50px;
+      gap: 30px;
+      padding: 60px;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255,255,255,0.06);
       border-radius: 14px;
       padding: 25px;
       text-align: center;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 15px rgba(0,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease 7.2s forwards;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(0,255,255,0.3), transparent);
+      transform: rotate(0deg);
+      transition: all 0.5s linear;
+      opacity: 0;
+    }
+
+    .card:hover::before {
+      animation: rotate 2s linear infinite;
+      opacity: 1;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .card h3 {
       color: #00ffff;
       font-size: 1.2em;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .card a {
       text-decoration: none;
       color: #fff;
       background: linear-gradient(90deg, #00b3ff, #00ffff);
-      padding: 10px 16px;
+      padding: 10px 18px;
       border-radius: 6px;
       display: inline-block;
-      margin-top: 10px;
-      transition: 0.3s;
+      margin-top: 8px;
+      transition: transform 0.3s, opacity 0.3s;
     }
 
     .card a:hover {
-      opacity: 0.8;
-      transform: scale(1.05);
+      transform: scale(1.07);
+      opacity: 0.85;
     }
 
+    /* === 页脚 === */
     footer {
       text-align: center;
-      padding: 40px 20px;
-      background: rgba(255, 255, 255, 0.05);
-      color: #bbb;
+      padding: 60px 20px 80px;
+      background: rgba(255,255,255,0.05);
       line-height: 1.8em;
+      position: relative;
     }
 
     footer p {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
-      font-size: 0.95em;
+      font-size: 0.96em;
+      color: #ddd;
+      animation: softGlow 3s ease-in-out infinite alternate;
     }
 
     footer .contact {
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 0.9em;
       color: #00ffff;
+      letter-spacing: 0.5px;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    .card {
-      animation: fadeInUp 0.6s ease forwards;
+    @keyframes softGlow {
+      from { text-shadow: 0 0 10px rgba(0,255,255,0.3); }
+      to { text-shadow: 0 0 20px rgba(0,255,255,0.7); }
     }
   </style>
 </head>
 <body>
+
+  <canvas id="bg"></canvas>
+
+  <!-- 封面动画 -->
+  <div id="intro">
+    <h1>INKFLUSCP</h1>
+    <p>点击进入作品集</p>
+  </div>
+
+  <!-- 主内容 -->
   <header>
     <h1>🎮 游戏拆解分析作品集</h1>
     <p>by inkfluscp · 游戏策划 / 系统分析 / 创意表达</p>
   </header>
 
   <section class="grid">
-    <div class="card">
-      <h3>指尖无双 · 游戏拆解</h3>
-      <a href="指尖无双游戏拆解.pdf" target="_blank">查看 PDF</a>
-    </div>
-
-    <div class="card">
-      <h3>末日曙光：幸存者策划</h3>
-      <a href="末日曙光：幸存者策划.pdf" target="_blank">查看 PDF</a>
-    </div>
-
-    <div class="card">
-      <h3>火影忍者 · 游戏拆解</h3>
-      <a href="火影忍者游戏拆解.pdf" target="_blank">查看 PDF</a>
-    </div>
-
-    <div class="card">
-      <h3>火影忍者 · 游戏设计逆推案</h3>
-      <a href="火影忍者游戏设计逆推案.pdf" target="_blank">查看 PDF</a>
-    </div>
-
-    <div class="card">
-      <h3>火柴人至高对决 · 游戏拆解</h3>
-      <a href="火柴人至高对决游戏拆解.pdf" target="_blank">查看 PDF</a>
-    </div>
-
-    <div class="card">
-      <h3>羽风奇缘 · 策划案</h3>
-      <a href="羽风奇缘策划.pdf" target="_blank">查看 PDF</a>
-    </div>
+    <div class="card"><h3>指尖无双 · 游戏拆解</h3><a href="指尖无双游戏拆解.pdf" target="_blank">查看 PDF</a></div>
+    <div class="card"><h3>末日曙光：幸存者策划</h3><a href="末日曙光：幸存者策划.pdf" target="_blank">查看 PDF</a></div>
+    <div class="card"><h3>火影忍者 · 游戏拆解</h3><a href="火影忍者游戏拆解.pdf" target="_blank">查看 PDF</a></div>
+    <div class="card"><h3>火影忍者 · 游戏设计逆推案</h3><a href="火影忍者游戏设计逆推案.pdf" target="_blank">查看 PDF</a></div>
+    <div class="card"><h3>火柴人至高对决 · 游戏拆解</h3><a href="火柴人至高对决游戏拆解.pdf" target="_blank">查看 PDF</a></div>
+    <div class="card"><h3>羽风奇缘 · 策划案</h3><a href="羽风奇缘策划.pdf" target="_blank">查看 PDF</a></div>
   </section>
 
   <footer>
@@ -176,5 +272,47 @@
     </p>
     <div class="contact">📧 联系邮箱：2898124867@qq.com</div>
   </footer>
+
+  <script>
+    // 点击进入动画
+    const intro = document.getElementById("intro");
+    intro.addEventListener("click", () => {
+      intro.style.transition = "opacity 1s";
+      intro.style.opacity = "0";
+      setTimeout(() => intro.classList.add("hidden"), 1000);
+    });
+
+    // 背景粒子动画
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    function init() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      particles = Array.from({length: 80}, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.5,
+        dx: (Math.random() - 0.5) * 0.3,
+        dy: (Math.random() - 0.5) * 0.3
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = "rgba(0,255,255,0.8)";
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if(p.x<0||p.x>w)p.dx*=-1;
+        if(p.y<0||p.y>h)p.dy*=-1;
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize',init);
+    init(); draw();
+  </script>
 </body>
 </html>
