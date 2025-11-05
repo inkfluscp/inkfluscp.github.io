@@ -15,7 +15,6 @@
       scroll-behavior: smooth;
     }
 
-    /* === 背景粒子 === */
     canvas#bg {
       position: fixed;
       top: 0; left: 0;
@@ -34,11 +33,13 @@
       align-items: center;
       justify-content: center;
       z-index: 100;
-      transition: opacity 1s ease;
+      transition: opacity 1.2s ease, transform 1.2s ease;
     }
 
-    #intro.hidden {
+    #intro.fade-out {
       opacity: 0;
+      transform: scale(0.92);
+      filter: blur(6px);
       pointer-events: none;
     }
 
@@ -259,18 +260,15 @@
       一个真正热爱游戏的玩家，其热情远不止沉溺于虚拟世界的排名与胜负之间。<br>
       他会将自己钟爱的游戏视若珍宝，愿意从剧情、机制、美术、音乐乃至文化背景等各个维度去深入探索，<br>
       如同热恋中的人渴望了解伴侣的一切那般，充满好奇与专注。<br><br>
-
       玩游戏，于真正的游戏爱好者而言，是一场与作品的深度对话。<br>
       他们不仅倾听其中所传递的情感与思想，也品味玩法设计的精妙，欣赏系统架构的智慧，<br>
       同时也清醒地意识到其中可能存在的局限与遗憾。<br>
       游戏，在这些玩家心中，是一种特别的数字艺术品。<br><br>
-
       玩家与游戏设计师之间，更像是侠客与铁匠的关系。<br>
       一位善用兵器的侠客，在握剑的刹那，便能感受到铁匠千锤百炼的用心，<br>
       每一道锻痕中所凝结的匠心与执着。<br>
       而铁匠亦深知，唯有历经生死相搏、江湖洗礼的侠客，才能真正领悟这把武器的灵魂所在，<br>
       并将其威力发挥到极致。<br><br>
-
       在这种默契之中，游戏不再只是娱乐的工具，<br>
       而成为连接创造者与体验者的精神桥梁——一种唯有真正懂得的人，才能读得懂的语言。
     </p>
@@ -281,10 +279,10 @@
     // 点击进入动画
     const intro = document.getElementById("intro");
     intro.addEventListener("click", () => {
-      intro.classList.add("hidden");
+      intro.classList.add("fade-out");
       setTimeout(() => {
         intro.style.display = "none";
-      }, 1000);
+      }, 1200);
     });
 
     // 背景粒子动画
