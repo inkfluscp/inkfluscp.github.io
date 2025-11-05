@@ -34,17 +34,30 @@
       align-items: center;
       justify-content: center;
       z-index: 100;
-      animation: fadeOut 1s ease forwards;
-      animation-delay: 4.5s;
+      transition: opacity 1s ease;
     }
 
-    #intro.hidden { display: none; }
+    #intro.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #intro img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 20px rgba(0,255,255,0.6);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease 0.5s forwards;
+    }
 
     #intro h1 {
       color: #00ffff;
-      font-size: 3em;
+      font-size: 2.5em;
       opacity: 0;
-      animation: logoFade 3s ease forwards;
+      animation: fadeIn 2s ease 1.5s forwards, glow 2s infinite alternate 3s;
     }
 
     #intro p {
@@ -52,36 +65,20 @@
       font-size: 1.2em;
       color: #ccc;
       opacity: 0;
-      animation: fadeIn 1s ease 3s forwards, glow 2s infinite alternate;
+      animation: fadeIn 1.5s ease 2.5s forwards;
     }
 
-    #intro::before {
-      content: "";
-      position: absolute;
-      top: 50%; left: -50%;
-      width: 200%; height: 2px;
-      background: linear-gradient(90deg, transparent, #00ffff, transparent);
-      opacity: 0;
-      animation: lightSweep 3s ease-in-out 1s forwards;
+    #intro:hover p {
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+      cursor: pointer;
     }
 
-    @keyframes logoFade {
-      0% { opacity: 0; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.05); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    @keyframes lightSweep {
-      0% { opacity: 0; transform: translateX(-50%) scaleX(0.2); }
-      50% { opacity: 1; transform: translateX(50%) scaleX(1.2); }
-      100% { opacity: 0; transform: translateX(150%) scaleX(0.3); }
-    }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
+
     @keyframes glow {
       from { text-shadow: 0 0 5px #00ffff; }
       to { text-shadow: 0 0 20px #00ffff; }
@@ -98,20 +95,19 @@
       font-size: 2.8em;
       color: #00ffff;
       letter-spacing: 2px;
-      opacity: 0;
-      animation: typing 3s steps(20, end) 5.5s forwards, blink 0.75s step-end infinite 8.5s;
       white-space: nowrap;
       overflow: hidden;
       border-right: .15em solid #00ffff;
       width: 0;
       display: inline-block;
+      animation: typing 3s steps(20, end) forwards, blink 0.75s step-end infinite 3s;
     }
 
     header p {
       font-size: 1.1em;
       color: #ccc;
       opacity: 0;
-      animation: fadeIn 1.5s ease 6.5s forwards;
+      animation: fadeIn 1.5s ease 4s forwards;
     }
 
     @keyframes typing {
@@ -145,7 +141,7 @@
       overflow: hidden;
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeUp 0.8s ease 7.2s forwards;
+      animation: fadeUp 0.8s ease forwards;
     }
 
     .card::before {
@@ -219,6 +215,7 @@
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     @keyframes softGlow {
       from { text-shadow: 0 0 10px rgba(0,255,255,0.3); }
       to { text-shadow: 0 0 20px rgba(0,255,255,0.7); }
@@ -231,6 +228,7 @@
 
   <!-- 封面动画 -->
   <div id="intro">
+    <img src="avatar.png" alt="avatar">
     <h1>INKFLUSCP</h1>
     <p>点击进入作品集</p>
   </div>
@@ -277,9 +275,8 @@
     // 点击进入动画
     const intro = document.getElementById("intro");
     intro.addEventListener("click", () => {
-      intro.style.transition = "opacity 1s";
-      intro.style.opacity = "0";
-      setTimeout(() => intro.classList.add("hidden"), 1000);
+      intro.classList.add("hidden");
+      setTimeout(() => intro.style.display = "none", 1000);
     });
 
     // 背景粒子动画
