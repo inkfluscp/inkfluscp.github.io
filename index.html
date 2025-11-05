@@ -43,34 +43,39 @@
     }
 
     #intro img {
-      width: 140px;
-      height: 140px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 20px rgba(0,255,255,0.6);
-      margin-bottom: 20px;
+      border: 3px solid #00ffff;
+      box-shadow: 0 0 30px rgba(0,255,255,0.6);
+      margin-bottom: 30px;
+      object-fit: cover;
+      object-position: center;
+      animation: fadeIn 2s ease 0.5s forwards, softGlow 3s ease-in-out infinite alternate 3s;
       opacity: 0;
-      animation: fadeIn 2s ease 0.5s forwards;
     }
 
     #intro h1 {
       color: #00ffff;
-      font-size: 2.5em;
+      font-size: 2.8em;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(0,255,255,0.6);
       opacity: 0;
-      animation: fadeIn 2s ease 1.5s forwards, glow 2s infinite alternate 3s;
+      animation: fadeIn 2s ease 1.5s forwards;
     }
 
     #intro p {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 1.2em;
-      color: #ccc;
+      color: #aaa;
       opacity: 0;
       animation: fadeIn 1.5s ease 2.5s forwards;
+      transition: color 0.3s;
     }
 
     #intro:hover p {
       color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
+      text-shadow: 0 0 12px #00ffff;
       cursor: pointer;
     }
 
@@ -79,12 +84,12 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #00ffff; }
-      to { text-shadow: 0 0 20px #00ffff; }
+    @keyframes softGlow {
+      from { box-shadow: 0 0 20px rgba(0,255,255,0.3); }
+      to { box-shadow: 0 0 40px rgba(0,255,255,0.8); }
     }
 
-    /* === 主内容 === */
+    /* === 主体 === */
     header {
       text-align: center;
       padding: 120px 20px 80px;
@@ -119,7 +124,7 @@
       50% { border-color: #00ffff; }
     }
 
-    /* === 网格布局 === */
+    /* === 卡片网格 === */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -180,6 +185,8 @@
       display: inline-block;
       margin-top: 8px;
       transition: transform 0.3s, opacity 0.3s;
+      position: relative;
+      z-index: 1;
     }
 
     .card a:hover {
@@ -193,7 +200,6 @@
       padding: 60px 20px 80px;
       background: rgba(255,255,255,0.05);
       line-height: 1.8em;
-      position: relative;
     }
 
     footer p {
@@ -276,7 +282,9 @@
     const intro = document.getElementById("intro");
     intro.addEventListener("click", () => {
       intro.classList.add("hidden");
-      setTimeout(() => intro.style.display = "none", 1000);
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, 1000);
     });
 
     // 背景粒子动画
